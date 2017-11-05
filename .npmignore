@@ -1,0 +1,6 @@
+node_modules/**
+doc/jsdoc/**
+typings/**
+*.njsproj
+typings.json
+database-util.sln
