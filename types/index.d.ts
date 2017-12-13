@@ -106,8 +106,8 @@ declare class DatabaseConnection {
 
   static getConnection(
     name: string,
-    mode: string,
-    configOverride: ConnectionConfig
+    mode?: string,
+    configOverride?: ConnectionConfig
   ): DatabaseConnection;
   
   private static __loadConnectionConfigFromFile(
