@@ -33,7 +33,7 @@ declare interface RunBasicServiceConfig {
   fnSanitizeRequest: fnSanitizeRequest,
   fnMakeQuery: fnMakeQuery,
   oneOrMany: string,
-  client: pg.Client
+  client?: pg.Client
 }
 
 declare interface SquelQuery {
@@ -49,7 +49,7 @@ declare interface fnQuery {
   (
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 }
 
@@ -76,14 +76,14 @@ declare interface fnMakeQuery {
 declare interface fnSquelQueryReturningOne {
   (
     q: SquelQuery,
-    client: pg.Client
+    client?: pg.Client
   ): Promise<object>;
 }
 
 declare interface fnSquelQueryReturningMany {
   (
     q: SquelQuery,
-    client: pg.Client
+    client?: pg.Client
   ): Promise<any[]>;
 }
 
@@ -146,20 +146,20 @@ declare class DatabaseConnection {
     __config: ConfigOptions,
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 
   private __queryWithClient(
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 
   private __DI_query(
     __fnQueryWithClient: (
       queryString: string,
       args: any[],
-      client: pg.Client
+      client?: pg.Client
     ) => Promise<pg.QueryResult[]>,
     __fnQueryWithoutClient: (
       queryString: string,
@@ -167,13 +167,13 @@ declare class DatabaseConnection {
     ) => Promise<pg.QueryResult[]>,
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 
   query(
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 
   private __DI_getClient(
@@ -195,42 +195,42 @@ declare class DatabaseConnection {
     __fnQuery: fnQuery,
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<any[]>;
 
   queryReturningMany(
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<any[]>;
 
   private __DI_queryReturningOne(
     __fnQuery: fnQuery,
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<object>;
 
   queryReturningOne(
     queryString: string,
     args: any[],
-    client: pg.Client
+    client?: pg.Client
   ): Promise<object>;
 
   private __DI_squelQuery(
     __fnQuery: fnQuery,
     q: SquelQuery,
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 
   squelQuery(
     q: SquelQuery,
-    client: pg.Client
+    client?: pg.Client
   ): Promise<pg.QueryResult[]>;
 
   squelQueryReturningMany(
     q: SquelQuery,
-    client: pg.Client
+    client?: pg.Client
   ): Promise<any[]>;
 
   squelQueryReturningOne: fnSquelQueryReturningOne;
@@ -240,11 +240,11 @@ declare class DatabaseConnection {
   getSquel(): object; // Really should be a Squel object, but typings don't exist yet for Squel
 
   getSquelSelect(
-    squelObj: object
+    squelObj?: object
   ): object;
 
   getSquelInsert(
-    squelObj: object
+    squelObj?: object
   ): object;
 
   runBasicService(
