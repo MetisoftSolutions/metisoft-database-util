@@ -255,7 +255,7 @@ declare class DatabaseConnection {
     config: RunBasicServiceConfig,
     __fnSquelQueryReturningOne: fnSquelQueryReturningOne,
     __fnSquelQueryReturningMany: fnSquelQueryReturningMany,
-    __fnConvertErrorCodes2Messages: (string) => string
+    __fnConvertErrorCodes2Messages: (str: string) => string
   ): Promise<any[] | object>;
 
   beginTransaction(
