@@ -77,7 +77,7 @@ declare interface fnSquelQueryReturningOne {
   (
     q: SquelQuery,
     client?: pg.Client
-  ): Promise<object>;
+  ): Promise<any>;
 }
 
 declare interface fnSquelQueryReturningMany {
