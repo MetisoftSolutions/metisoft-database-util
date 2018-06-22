@@ -1,6 +1,7 @@
 import pg = require('pg');
 import pgPool = require('pg-pool');
 import express = require('express');
+import * as Promise from 'bluebird';
 
 
 
@@ -33,7 +34,7 @@ declare interface RunBasicServiceConfig {
   fnSanitizeRequest: fnSanitizeRequest,
   fnMakeQuery: fnMakeQuery,
   oneOrMany: string,
-  client?: pg.Client
+  client?: pg.PoolClient
 }
 
 declare interface SquelQuery {
@@ -49,7 +50,7 @@ declare interface fnQuery {
   (
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 }
 
@@ -76,14 +77,14 @@ declare interface fnMakeQuery {
 declare interface fnSquelQueryReturningOne {
   (
     q: SquelQuery,
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<any>;
 }
 
 declare interface fnSquelQueryReturningMany {
   (
     q: SquelQuery,
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<any[]>;
 }
 
@@ -132,7 +133,7 @@ declare class DatabaseConnection {
   ): Promise<pg.QueryResult[]>;
 
   private __makeClientQueryPromise(
-    client: pg.Client,
+    client: pg.PoolClient,
     queryString: string,
     args: any[]
   ): Promise<pg.QueryResult[]>;
@@ -146,20 +147,20 @@ declare class DatabaseConnection {
     __config: ConfigOptions,
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 
   private __queryWithClient(
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 
   private __DI_query(
     __fnQueryWithClient: (
       queryString: string,
       args: any[],
-      client?: pg.Client
+      client?: pg.PoolClient
     ) => Promise<pg.QueryResult[]>,
     __fnQueryWithoutClient: (
       queryString: string,
@@ -167,21 +168,21 @@ declare class DatabaseConnection {
     ) => Promise<pg.QueryResult[]>,
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 
   query(
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 
   private __DI_getClient(
     __pool: pgPool.Pool,
     __connectionDetails: ConnectionDetails
-  ): Promise<pg.Client>;
+  ): Promise<pg.PoolClient>;
 
-  getClient(): Promise<pg.Client>;
+  getClient(): Promise<pg.PoolClient>;
 
   turnQueryResultIntoRows(
     queryResult: Promise<pg.QueryResult[]>
@@ -195,42 +196,42 @@ declare class DatabaseConnection {
     __fnQuery: fnQuery,
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<any[]>;
 
   queryReturningMany(
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<any[]>;
 
   private __DI_queryReturningOne(
     __fnQuery: fnQuery,
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<object>;
 
   queryReturningOne(
     queryString: string,
     args: any[],
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<object>;
 
   private __DI_squelQuery(
     __fnQuery: fnQuery,
     q: SquelQuery,
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 
   squelQuery(
     q: SquelQuery,
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<pg.QueryResult[]>;
 
   squelQueryReturningMany(
     q: SquelQuery,
-    client?: pg.Client
+    client?: pg.PoolClient
   ): Promise<any[]>;
 
   squelQueryReturningOne: fnSquelQueryReturningOne;
@@ -259,15 +260,15 @@ declare class DatabaseConnection {
   ): Promise<any[] | object>;
 
   beginTransaction(
-    client: pg.Client
+    client: pg.PoolClient
   ): Promise<void>;
 
   commitTransaction(
-    client: pg.Client
+    client: pg.PoolClient
   ): Promise<void>;
 
   rollbackTransaction(
-    client: pg.Client
+    client: pg.PoolClient
   ): Promise<void>;
 }
 

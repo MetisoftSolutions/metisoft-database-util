@@ -313,7 +313,7 @@ DatabaseConnection.prototype.__DI_simpleQuery = function __DI_simpleQuery(__pool
  * which manually creates a Promise from the callback version of calling the query function.
  *
  * @private
- * @param {Client} client
+ * @param {PoolClient} client
  * @param {String} queryString
  * @param {Array} args
  * @returns {QueryResults}
@@ -359,7 +359,7 @@ DatabaseConnection.prototype.__simpleQuery = function __simpleQuery(queryString,
  * @param {DatabaseConnection~ConfigOptions} config
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<QueryResults>}
  */
@@ -404,7 +404,7 @@ DatabaseConnection.prototype.__DI_queryWithClient = function __DI_queryWithClien
  *
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<QueryResults>}
  */
@@ -418,7 +418,7 @@ DatabaseConnection.prototype.__queryWithClient = function __queryWithClient(quer
  * @callback DatabaseConnection~fnQueryWithClient
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  */
  
 /**
@@ -436,7 +436,7 @@ DatabaseConnection.prototype.__queryWithClient = function __queryWithClient(quer
  * @param {DatabaseConnection~fnQueryWithoutClient} fnQueryWithoutClient
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<QueryResults>}
  */
@@ -477,7 +477,7 @@ DatabaseConnection.prototype.__DI_query = function __DI_query(__fnQueryWithClien
  *    For parameterized queries, this array should hold the values (arguments).
  *    Omit or pass in `[]` if you are not using a parameterized query.
  *
- * @param {Client} client
+ * @param {PoolClient} client
  *    A client object returned by `getClient()`.
  *
  * @returns {Promise<QueryResults>} -
@@ -501,7 +501,7 @@ DatabaseConnection.prototype.query = function query(queryString, args, client) {
  * @private
  * @param {PgPool} __pool
  * @param {DatabaseConnection~ConnectionDetails} __connectionDetails
- * @returns {Promise<Client>}
+ * @returns {Promise<PoolClient>}
  */
 DatabaseConnection.prototype.__DI_getClient = function __DI_getClient(__pool, __connectionDetails) {
   return __pool.connect()    
@@ -516,7 +516,7 @@ DatabaseConnection.prototype.__DI_getClient = function __DI_getClient(__pool, __
  * Retrieves a client that can be used to execute a series of queries.
  *
  * @public
- * @returns {Promise<Client>}
+ * @returns {Promise<PoolClient>}
  */
 DatabaseConnection.prototype.getClient = function getClient() {
   return this.__DI_getClient(this.__pool, this.__config.connection);
@@ -565,7 +565,7 @@ DatabaseConnection.prototype.turnRowsIntoSingleResult = function turnRowsIntoSin
  * @callback DatabaseConnection~fnQuery
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  */
 
 
@@ -578,7 +578,7 @@ DatabaseConnection.prototype.turnRowsIntoSingleResult = function turnRowsIntoSin
  * @param {DatabaseConnection~fnQuery} __fnQuery
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<Array>}
  */
@@ -597,7 +597,7 @@ DatabaseConnection.prototype.__DI_queryReturningMany = function __DI_queryReturn
  *
  * @param {String} queryString
  * @param {Array} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Array}
  */
@@ -615,7 +615,7 @@ DatabaseConnection.prototype.queryReturningMany = function queryReturningMany(qu
  * @param {DatabaseConnection~fnQuery} __fnQuery
  * @param {String} queryString
  * @param {Array<Any>} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<Object>}
  */
@@ -636,7 +636,7 @@ DatabaseConnection.prototype.__DI_queryReturningOne = function __DI_queryReturni
  *
  * @param {String} queryString
  * @param {Array} args
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Array}
  */
@@ -668,7 +668,7 @@ DatabaseConnection.prototype.queryReturningOne = function queryReturningOne(quer
  *
  * @param {DatabaseConnection~fnQuery} __fnQuery
  * @param {DatabaseConnection~SquelQuery} q
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<QueryResults>}
  */
@@ -696,7 +696,7 @@ DatabaseConnection.prototype.__DI_squelQuery = function __DI_squelQuery(__fnQuer
  * @param {SquelToParam} q -
  *    Object with two properties. `text` holds the parameterized query,
  *    and `values` holds the array of arguments.
- * @param {Client} client
+ * @param {PoolClient} client
  *
  * @returns {Promise<QueryResults>}
  */
@@ -869,7 +869,7 @@ DatabaseConnection.prototype.getSquelInsert = function getSquelInsert(squelObj) 
  *    Pass in `'one'` if the query should always return one result.
  *    Pass in `'many'` if the query may return multiple results.
  *
- * @property {Client} client -
+ * @property {PoolClient} client -
  *    If using the same client for multiple queries, pass it in here.
  */
 
@@ -975,7 +975,7 @@ function __DI_runBasicService(config,
  * and/or `rollbackTransaction()`.
  *
  * @public
- * @param {Client} client
+ * @param {PoolClient} client
  * @returns {Promise<Nothing>}
  */
 DatabaseConnection.prototype.beginTransaction =
@@ -990,7 +990,7 @@ function beginTransaction(client) {
  * point before this call.
  *
  * @public
- * @param {Client} client
+ * @param {PoolClient} client
  * @returns {Promise<Nothing>}
  */
 DatabaseConnection.prototype.commitTransaction =
@@ -1007,7 +1007,7 @@ function commitTransaction(client) {
  * can result in an invalid system state.
  *
  * @public
- * @param {Client} client
+ * @param {PoolClient} client
  * @returns {Promise<Nothing>}
  */
 DatabaseConnection.prototype.rollbackTransaction =
