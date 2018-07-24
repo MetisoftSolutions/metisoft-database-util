@@ -1,7 +1,6 @@
 'use strict';
 var _ = require('lodash');
 var PgPool = require('pg-pool');
-var Promise = require('bluebird');
 var path = require('path');
 var sprintf = require('sprintf-js').sprintf;
 var squel = require('squel');

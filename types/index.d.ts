@@ -1,7 +1,6 @@
 import pg = require('pg');
 import pgPool = require('pg-pool');
 import express = require('express');
-import * as Promise from 'bluebird';
 
 
 

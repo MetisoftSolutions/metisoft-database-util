@@ -1,7 +1,6 @@
 'use strict';
 var _ = require('lodash');
 var pg = require('pg');
-var Promise = require('bluebird');
 var Validator = require('jsonschema').Validator;
 var sprintf = require('sprintf-js').sprintf;
 var squel = require('squel');

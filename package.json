@@ -1,6 +1,6 @@
 {
   "name": "metisoft-database-util",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Metisoft, LLC - Database Utilities",
   "author": "James Brawn, Jr.",
   "license": "MIT",
@@ -10,7 +10,6 @@
   "dependencies": {
     "@types/pg": "^7.4.9",
     "@types/pg-pool": "0.0.3",
-    "bluebird": "^3.3.5",
     "jsonschema": "^1.1.0",
     "lodash": "^4.17.10",
     "metisoft-module-exporter": "https://github.com/MetisoftSolutions/metisoft-module-exporter.git#v1.1.0",
